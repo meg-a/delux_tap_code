@@ -1,7 +1,8 @@
 # delux_tap_code
 We developed our own tap code system from the original tap code.
 
-This program allows you to use tap code to write text. In other words, YOU ONLY NEED LEFT SHIFT KEY TO TYPE IN WORDS. 
+This program allows you to use tap code to write text. In other words, if you use this program, YOU ONLY NEED LEFT SHIFT 
+KEY TO TYPE IN WORDS. 
 
 In tap code, message is transmitted through a series of tap sounds. 
 
