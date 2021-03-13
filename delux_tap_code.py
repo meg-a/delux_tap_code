@@ -6,18 +6,17 @@ import os
 #root window settings 
 root = tk.Tk()
 root.title("Super Delux Tap Type")
-root.geometry("1000x1000")
+root.geometry("1000x600")
 root.configure(bg = "LightBlue1")
 
-#connecting root to keys  
-root.bind("<Key>", user_input)
-root.bind("<KeyRelease-Shift_L>", key_release)
+
 
 #global variables 
-row_or_column = "column"
+row_or_column = "row"
 row = 0
 column = 0
 letters = ""
+
 #global variables for time 
 end = 0    
 start = 0 
@@ -46,6 +45,8 @@ def key_release(key):
     user_press_time = end - start
     #send the time to the tap code function 
     space_or_new_letter(user_press_time)
+    
+
 
 #when shift is pressed and released
 def space_or_new_letter(time):
@@ -57,9 +58,9 @@ def space_or_new_letter(time):
     global tap_code
     #if the pressed time is less than 0.5 seconds  
     if time < 0.5:
-        if row_or_column == "column":
+        if row_or_column == "row":
             column += 1
-        elif row_or_column == "row":
+        elif row_or_column == "column":
             row += 1
         
         if row > 5:
@@ -86,29 +87,31 @@ def space_or_new_letter(time):
     #if the press time is longer than 0.5 seconds 
     elif time >= 0.5:
         #if it is classified row then alphabet is printed and the sound function reads the word
-        if row_or_column == "row":
+        if row_or_column == "column":
             letter_num = column*10 + row
             if letter_num in tap_code:
                 #for general letter numbers in tap code (63 is exception)
                 if letter_num != 63:
                     letters += tap_code[letter_num]
-                    print(letters)
                 else:
                     #only if letter number is 63, the last letter of the string in variable 'letters' is deleted
                     if len(letters) > 1:
                         letters = letters[:-1]
                     elif len(letters) == 1:
-                        letters = ""
-                    lbl_letter["text"] = tap_code[letter_num]
+                        letters = " "
                 lbl_words["text"] = letters
                 lbl_letter["text"] = tap_code[letter_num]
                 os.system(f"say {letters}")
                 row=0
                 column=0
-                row_or_column = "column"
+                row_or_column = "row"
         #if it is classified column then you will input row next 
         else:
-            row_or_column = "row"
+            row_or_column = "column"
+            
+#connecting root to keys  
+root.bind("<Key>", user_input)
+root.bind("<KeyRelease-Shift_L>", key_release)
 
 #tkinter widgets 
 #label for typed words 
@@ -130,7 +133,7 @@ lbl_letter.grid(row=1, column=2)
 table = tk.PhotoImage(file = "tap_delux.gif")
 lbl_gif = tk.Label(root, image = table)
 lbl_gif.configure(bg = "LightBlue1")
-lbl_gif.grid(row=5, column=0, columnspan=3)
+lbl_gif.grid(row=3, column=0, columnspan=3)
 
 
 root.mainloop()
